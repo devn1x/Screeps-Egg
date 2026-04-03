@@ -1,4 +1,4 @@
-FROM ghcr.io/devn1x/screeps-launcher:node-24
+FROM debian:trixie
 
 LABEL author="Leandro Klaus" maintainer="info@lklaus.ch"
 
@@ -25,6 +25,3 @@ STOPSIGNAL SIGINT
 
 ENTRYPOINT []
 CMD ["/bin/sh", "/entrypoint.sh"]
-
-
-
