@@ -1,4 +1,4 @@
-FROM screepers/screeps-launcher
+FROM ghcr.io/devn1x/screeps-launcher:node-24
 
 LABEL author="Leandro Klaus" maintainer="info@lklaus.ch"
 
