@@ -1,4 +1,4 @@
-FROM debian:trixie
+FROM debian:trixie-slim
 
 LABEL author="Leandro Klaus" maintainer="info@lklaus.ch"
 
@@ -10,7 +10,9 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN useradd -m -u 998 -d /home/container -s /bin/bash container
 
-RUN apt update && apt install -y nodejs npm nano screen
+RUN apt-get update && apt-get install -y curl sudo nano screen build-essential python3
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | sudo bash -
+RUN apt-get update && apt-get install -y nodejs
 
 USER container
 
