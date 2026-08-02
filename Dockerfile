@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.source="https://github.com/Lela810/Screeps-Egg"
 LABEL org.opencontainers.image.licenses=MIT
 
 USER root
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN useradd -m -u 1000 -d /home/container -s /bin/bash container
 
