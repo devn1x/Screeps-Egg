@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y curl sudo nano screen build-essential p
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | sudo bash -
 RUN apt-get update && apt-get install -y nodejs
 
+RUN npm install -g npm@11
+
 USER container
 
 COPY --chown=container:container ./entrypoint.sh /entrypoint.sh
