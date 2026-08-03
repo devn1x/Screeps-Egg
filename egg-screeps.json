@@ -10,7 +10,7 @@
 	"description": "A dedicated server for the game Screeps.",
 	"features": null,
 	"docker_images": {
-		"Screeps-Egg": "ghcr.io/lela810/screeps-egg"
+		"Screeps-Egg": "ghcr.io/devn1x/screeps-egg:latest"
 	},
 	"file_denylist": [],
 	"startup": "./init.sh && screen -d -m npx screeps start --port ${SERVER_PORT} --steam_api_key ${STEAM_KEY} --cli_port $((SERVER_PORT + 1)) && sleep 5 && npx screeps cli --port $((SERVER_PORT + 1))",
