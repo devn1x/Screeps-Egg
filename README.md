@@ -26,10 +26,6 @@ This is a Node.js 24 compatible fork of [Lela810/Screeps-Egg](https://github.com
 - Added a `workflow_dispatch` trigger so the image build can be started manually.
 - Removed the extra `ghcr.io/lela810/screeps-egg:latest` tag.
 
-**Egg**
-
-- The installer now writes a `package.json` with an `allowScripts` allowlist for the packages the server needs to build. npm 12+ disables dependency install scripts by default.
-
 ## Installation
 
 1. Import the egg-screeps.json into a Pterodactyl Nest of your choice
