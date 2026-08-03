@@ -14,8 +14,6 @@ RUN apt-get update && apt-get install -y curl sudo nano screen build-essential p
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | sudo bash -
 RUN apt-get update && apt-get install -y nodejs
 
-ENV NPM_CONFIG_ALLOW_SCRIPTS="isolated-vm,@screeps/driver,es5-ext,screeps,uglifyjs-webpack-plugin"
-
 USER container
 
 COPY --chown=container:container ./entrypoint.sh /entrypoint.sh
