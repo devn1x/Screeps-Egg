@@ -20,15 +20,12 @@ This is a Node.js 24 compatible fork of [Lela810/Screeps-Egg](https://github.com
 - Switched the base image from `screepers/screeps-launcher` to `debian:trixie-slim` (Debian Trixie).
 - Changed the `container` user UID from `998` to `1000` to fix the `getpwuid() can't identify your account!` error.
 - Node.js is now installed via the NodeSource `setup_24.x` repository instead of the distro's `nodejs`/`npm` packages.
+- Set `NPM_CONFIG_ALLOW_SCRIPTS` to allow the required packages to run their install scripts. npm 12+ disables dependency install scripts by default.
 
 **GitHub Actions**
 
 - Added a `workflow_dispatch` trigger so the image build can be started manually.
 - Removed the extra `ghcr.io/lela810/screeps-egg:latest` tag.
-
-**Egg**
-
-- Added `--allow-scripts` when installing the screeps private server. npm 12+ disables dependency install scripts by default.
 
 ## Installation
 
