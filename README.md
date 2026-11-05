@@ -35,3 +35,16 @@ This is a Node.js 24 compatible fork of [Lela810/Screeps-Egg](https://github.com
 ## Usage
 
 When starting you have full access to the Screeps server CLI
+
+## Updating and resetting
+
+> [!WARNING]
+> Create a backup before reinstalling a server or deleting any of its files.
+
+To update, import the new `egg-screeps.json` into your Nest and reinstall the server.
+A reinstall only replaces `init.sh`, which is managed by the egg. Manual changes to
+that file need to be added back afterwards.
+
+To reset `config.yml`, `mods.json`, `.screepsrc`, `db.json` (game world and user data)
+or `assets/`, stop the server and rename or delete the file or folder. It is recreated
+with its default on the next start.
