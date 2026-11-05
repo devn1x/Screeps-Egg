@@ -28,7 +28,7 @@ This is a Node.js 24 compatible fork of [Lela810/Screeps-Egg](https://github.com
 
 ## Installation
 
-1. Import the egg-screeps.json into a Pterodactyl Nest of your choice
+1. Download `egg-screeps.json` from the [latest release](https://github.com/devn1x/Screeps-Egg/releases/download/release-main/egg-screeps.json) and import it into a Pterodactyl Nest of your choice
 
 2. In the tab "Variables", set a new default value for your Steam API Key (get it at your [Steam Dev Page](https://steamcommunity.com/dev/apikey))
 
@@ -41,7 +41,9 @@ When starting you have full access to the Screeps server CLI
 > [!WARNING]
 > Create a backup before reinstalling a server or deleting any of its files.
 
-To update, import the new `egg-screeps.json` into your Nest and reinstall the server.
+The console shows a notice on start when a new egg version is available.
+
+To update, import the new `egg-screeps.json` from the [latest release](https://github.com/devn1x/Screeps-Egg/releases/download/release-main/egg-screeps.json) into your Nest and reinstall the server.
 A reinstall only replaces `init.sh`, which is managed by the egg. Manual changes to
 that file need to be added back afterwards.
 

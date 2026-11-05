@@ -16,6 +16,10 @@ RUN apt-get update && apt-get install -y nodejs
 
 RUN npm install -g npm@11
 
+ARG EGG_VERSION=unreleased
+ARG EGG_BRANCH=local
+ENV EGG_VERSION=${EGG_VERSION} EGG_BRANCH=${EGG_BRANCH}
+
 USER container
 
 COPY --chown=container:container ./entrypoint.sh /entrypoint.sh

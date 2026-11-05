@@ -26,7 +26,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
@@ -35,6 +35,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # The version is derived from the last commit that changed the egg, so
+      # rebuilding the same commit results in the same version.
+      - name: Set egg version
+        id: egg
+        run: |
+          version=$(git log -1 --abbrev=7 --date=format:%Y.%-m.%-d --format=%ad+%h -- egg-screeps.json)
+          test -n "$version"
+          sed -i "s/EGG_INSTALLED_VERSION=unreleased/EGG_INSTALLED_VERSION=$version/" egg-screeps.json
+          grep -qF "EGG_INSTALLED_VERSION=$version" egg-screeps.json
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
@@ -80,6 +93,9 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            EGG_VERSION=${{ steps.egg.outputs.version }}
+            EGG_BRANCH=${{ github.ref_name }}
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
@@ -95,6 +111,31 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+
+      # Publish the egg with its version after the matching image is available.
+      # The tags must not be named like a branch, as that makes refs ambiguous.
+      - name: Publish egg
+        if: >-
+          (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+          (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.ref_name }}
+          VERSION: ${{ steps.egg.outputs.version }}
+        run: |
+          tag="release-$BRANCH"
+          if [ "$BRANCH" = "main" ]; then
+            release_type=--latest
+          else
+            release_type=--prerelease
+          fi
+          git tag -f "$tag"
+          git push -f origin "refs/tags/$tag"
+          if ! gh release view "$tag" > /dev/null 2>&1; then
+            gh release create "$tag" --verify-tag "$release_type" --title "Egg ($BRANCH)" --notes "Version $VERSION"
+          fi
+          gh release edit "$tag" --notes "Version $VERSION"
+          gh release upload "$tag" egg-screeps.json --clobber
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
