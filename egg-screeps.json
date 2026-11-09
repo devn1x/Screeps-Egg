@@ -14,7 +14,7 @@
 		"Screeps-Egg (dev)": "ghcr.io/devn1x/screeps-egg:dev"
 	},
 	"file_denylist": [],
-	"startup": "./init.sh && screen -d -m npx screeps start --port ${SERVER_PORT} --steam_api_key ${STEAM_KEY} --cli_port $((SERVER_PORT + 1)) && sleep 5 && npx screeps cli --port $((SERVER_PORT + 1))",
+	"startup": "./init.sh && screen -d -m npx screeps start --port ${SERVER_PORT} --steam_api_key ${STEAM_KEY} --cli_port $((SERVER_PORT + 1)) && wait-for-cli $((SERVER_PORT + 1)) && npx screeps cli --port $((SERVER_PORT + 1))",
 	"config": {
 		"files": "{}",
 		"startup": "{\r\n    \"done\": \"running on port\"\r\n}",

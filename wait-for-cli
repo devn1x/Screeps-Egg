@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+// Waits until the Screeps CLI accepts connections, so the CLI client can connect.
+// Usage: wait-for-cli <port> [timeout in seconds, default 120]
+const net = require('net');
+
+const port = Number(process.argv[2]);
+const timeout = Number(process.argv[3] || 120);
+if (!port || !timeout) {
+    console.error('Usage: wait-for-cli <port> [timeout in seconds]');
+    process.exit(2);
+}
+
+console.log('Connecting Screeps CLI');
+const deadline = Date.now() + timeout * 1000;
+
+function check() {
+    net.connect(port, 'localhost')
+        .on('connect', () => process.exit(0))
+        .on('error', () => {
+            if (Date.now() >= deadline) {
+                console.error(`ERROR: Screeps CLI not reachable on port ${port} after ${timeout} seconds`);
+                process.exit(1);
+            }
+            setTimeout(check, 1000);
+        });
+}
+
+check();

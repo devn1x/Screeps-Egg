@@ -16,6 +16,9 @@ RUN apt-get update && apt-get install -y nodejs
 
 RUN npm install -g npm@11
 
+COPY ./wait-for-cli /usr/local/bin/wait-for-cli
+RUN chmod 755 /usr/local/bin/wait-for-cli
+
 ARG EGG_VERSION=unreleased
 ARG EGG_BRANCH=local
 ENV EGG_VERSION=${EGG_VERSION} EGG_BRANCH=${EGG_BRANCH}
