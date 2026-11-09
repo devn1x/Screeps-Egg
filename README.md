@@ -1,7 +1,7 @@
 # Screeps-Egg
 
-[![Docker](https://github.com/Lela810/Screeps-Egg/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/Lela810/Screeps-Egg/actions/workflows/docker-publish.yml)
-[![License](https://img.shields.io/github/license/lela810/Screeps-Egg.svg?style=flat-square)](https://github.com/lela810/Screeps-Egg/blob/master/LICENSE)
+[![Docker](https://github.com/devn1x/Screeps-Egg/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/devn1x/Screeps-Egg/actions/workflows/docker-publish.yml)
+[![License](https://img.shields.io/github/license/devn1x/Screeps-Egg.svg?style=flat-square)](https://github.com/devn1x/Screeps-Egg/blob/master/LICENSE)
 
 This is a Screeps-egg for the Game Server Dashboard Pterodactyl.
 
