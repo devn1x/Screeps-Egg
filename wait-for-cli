@@ -21,7 +21,9 @@ setTimeout(() => {
 function check() {
     const socket = net.connect(port, 'localhost');
     socket.setTimeout(5000, () => socket.destroy(new Error('timeout')));
-    socket.on('connect', () => process.exit(0));
+    // Close the connection cleanly: exiting right away resets it, which crashes the backend
+    socket.on('connect', () => socket.resume().end());
+    socket.on('close', hadError => hadError || process.exit(0));
     socket.on('error', () => setTimeout(check, 1000));
 }
 
