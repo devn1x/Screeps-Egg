@@ -11,18 +11,18 @@ if (!port || !timeout) {
 }
 
 console.log('Connecting Screeps CLI');
-const deadline = Date.now() + timeout * 1000;
+
+// Hard limit, so a connection attempt that never answers can't block forever
+setTimeout(() => {
+    console.error(`ERROR: Screeps CLI not reachable on port ${port} after ${timeout} seconds`);
+    process.exit(1);
+}, timeout * 1000);
 
 function check() {
-    net.connect(port, 'localhost')
-        .on('connect', () => process.exit(0))
-        .on('error', () => {
-            if (Date.now() >= deadline) {
-                console.error(`ERROR: Screeps CLI not reachable on port ${port} after ${timeout} seconds`);
-                process.exit(1);
-            }
-            setTimeout(check, 1000);
-        });
+    const socket = net.connect(port, 'localhost');
+    socket.setTimeout(5000, () => socket.destroy(new Error('timeout')));
+    socket.on('connect', () => process.exit(0));
+    socket.on('error', () => setTimeout(check, 1000));
 }
 
 check();
